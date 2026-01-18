@@ -3,39 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Artículos Científicos</title>
-
-<style>
-body{background:#f5f5f5;font-family:Arial}
-.container{max-width:1000px;margin:40px auto}
-.card{background:white;padding:25px;border-radius:15px;margin-bottom:25px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1)}
-.card h3{color:#00695c}
-.card a{background:#00c853;color:white;padding:10px 20px;border-radius:8px;
-text-decoration:none;display:inline-block;margin-top:10px}
-.source{color:#2e7d32;font-size:20px;margin-top:10px}
-footer{background:#eee;color:#555;text-align:center;padding:20px}
-</style>
-
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="container">
-<h1 style="text-align:center">Artículos Científicos</h1>
+<h1>Artículos Científicos</h1>
 
 {% for a in articulos %}
 <div class="card">
     <h3>{{ a.titulo }}</h3>
     <p><strong>{{ a.revista }}</strong></p>
     <p>{{ a.anio }}</p>
-    <p><strong>Contributors:</strong> {{ a.contributors }}</p>
-    <a href="{{ a.doi }}" target="_blank">Ver artículo (DOI)</a>
-    <p class="source">✔ Source: Crossref</p>
+    <p>{{ a.contributors }}</p>
+    <a href="{{ a.doi }}" target="_blank">Ver artículo</a>
 </div>
 {% endfor %}
 
-<p><a href="/registro">Ver registro de visitas</a></p>
-</div>
+<a href="/">Volver al inicio</a>
 
-<footer>Página web creada por Graciela Celedonia Sosa Bueno</footer>
 </body>
 </html>
