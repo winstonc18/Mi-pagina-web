@@ -2,17 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenida</title>
+    <title>Artículos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <h1>Bienvenido</h1>
-    <p>Acceda a los artículos científicos</p>
+    <h1>Artículos Científicos</h1>
+    <p>Aquí van tus artículos</p>
 
-    <a href="{{ url_for('articulos') }}">
-        <button>Comenzar</button>
-    </a>
+    <a href="{{ url_for('inicio') }}">Volver al inicio</a>
 
 </body>
 </html>
