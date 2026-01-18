@@ -1,25 +1,16 @@
-from flask import Flask, request, render_template
+from flask import Flask, request
 from datetime import datetime
-import os
 
 app = Flask(__name__)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ARCHIVO_VISITAS = os.path.join(BASE_DIR, "visitas.txt")
-
 
 # ================= REGISTRO =================
 def guardar_visita(ip, fecha):
-    # Crear el archivo si no existe
-    if not os.path.exists(ARCHIVO_VISITAS):
-        with open(ARCHIVO_VISITAS, "w", encoding="utf-8") as f:
-            f.write("IP | FECHA\n")
-
-    with open(ARCHIVO_VISITAS, "a", encoding="utf-8") as f:
+    with open("visitas.txt", "a", encoding="utf-8") as f:
         f.write(f"{ip} | {fecha}\n")
 
 def leer_visitas():
     try:
-        with open(ARCHIVO_VISITAS, "r", encoding="utf-8") as f:
+        with open("visitas.txt", "r", encoding="utf-8") as f:
             return f.readlines()
     except:
         return []
@@ -27,17 +18,61 @@ def leer_visitas():
 # ================= BIENVENIDA =================
 @app.route("/")
 def inicio():
-    return render_template("index.html")
-    
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    guardar_visita(ip, fecha)
+
+    return """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bienvenida</title>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:white;
+    font-family:Arial;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+.box{max-width:650px}
+.book{font-size:100px;margin-bottom:20px}
+button{
+    padding:15px 40px;
+    font-size:20px;
+    background:#00c853;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+footer{
+    position:fixed;
+    bottom:10px;
+    width:100%;
+    color:#555;
+}
+</style>
+</head>
+<body>
+<div class="box">
+<div class="book">📚</div>
+<h1>Bienvenido a mi página de artículos científicos</h1>
+<p>Producción académica con acceso directo a DOI</p>
+<button onclick="location.href='/articulos'">Comenzar</button>
+</div>
+<footer>Página web creada por Graciela Celedonia Sosa Bueno</footer>
+</body>
+</html>
+"""
 
 # ================= ARTÍCULOS =================
 @app.route("/articulos")
 def articulos():
-    ip = request.remote_addr
-    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    guardar_visita(ip, fecha)
-    
-
     articulos = [
         {
             "titulo": "Análisis del estrés crónico y la carga mental para reducir el impacto de los riesgos silenciosos",
