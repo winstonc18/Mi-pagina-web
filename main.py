@@ -27,11 +27,10 @@ def leer_visitas():
 # ================= BIENVENIDA =================
 @app.route("/")
 def inicio():
-    print(">>> ENTRE A LA RUTA /")   # 👈 PRUEBA
     ip = request.remote_addr
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     guardar_visita(ip, fecha)
-    return "PRUEBA OK"
+    return articulos()
 
 
     
