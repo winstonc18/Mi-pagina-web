@@ -27,10 +27,25 @@ def leer_visitas():
 # ================= BIENVENIDA =================
 @app.route("/")
 def inicio():
-    ip = request.remote_addr
-    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    guardar_visita(ip, fecha)
-    return articulos()
+    return """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Bienvenida</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;text-align:center;padding-top:100px}
+a{background:#00695c;color:white;padding:15px 30px;border-radius:10px;
+text-decoration:none;font-size:20px}
+</style>
+</head>
+<body>
+<h1>Bienvenido</h1>
+<p>Acceda a los artículos científicos</p>
+<a href="/articulos">Comenzar</a>
+</body>
+</html>
+"""
 
 
     
@@ -38,6 +53,25 @@ def inicio():
 # ================= ARTÍCULOS =================
 @app.route("/articulos")
 def articulos():
+    ip = request.remote_addr
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    guardar_visita(ip, fecha)
+
+    return """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Artículos</title>
+</head>
+<body>
+<h1>Artículos Científicos</h1>
+<p>Aquí van tus artículos</p>
+<a href="/">Volver al inicio</a>
+</body>
+</html>
+"""
+
     articulos = [
         {
             "titulo": "Análisis del estrés crónico y la carga mental para reducir el impacto de los riesgos silenciosos",
